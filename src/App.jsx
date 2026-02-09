@@ -4,9 +4,9 @@ function App() {
   return (
     <>
       <h1 
-      className='text-9xl text-red-400 font-bold'
+      className='primary-title'
       >
-      Authentication using Email & password!
+      Project initialization content & Dependencies intrigations
       </h1>
     </>
   )

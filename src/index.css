@@ -1,1 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+NZ+Basic:wght@100..400&family=Saira:ital,wdth,wght@0,50..125,100..900;1,50..125,100..900&display=swap');
+
 @import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+
+    /** font-families ==> */
+
+    --font-sans: 'Saira', ui-sans-serif, system-ui, sans-serif;
+    --font-[cursive]: 'Playwrite NZ Basic', cursive;
+
+
+    /** --- Correct way to define breakpoints --- */
+    
+    --breakpoint-xxs: 20rem;
+    --breakpoint-xs: 21.875rem;
+    --breakpoint-sm: 30rem;
+    --breakpoint-md: 47.9375rem;
+    --breakpoint-lg: 61.875rem;
+    --breakpoint-xlg: 64rem;
+    --breakpoint-xl: 75rem;
+    --breakpoint-2xl: 80rem;
+    --breakpoint-3xl: 90rem;
+
+}
+
+@layer base {
+    * {
+        @apply m-0 p-0 box-border;
+    }
+    html {
+        @apply w-full h-full scroll-smooth;
+    }
+    body {
+        @apply w-full min-h-full capitalize font-sans font-light;
+    }
+}
+@layer components {
+
+    /** titles ===>  */
+    .primary-title {
+            @apply text-9xl font-black text-center p-4 px-10 my-5 bg-radial-[at_25%_25%]  from-indigo-500 from-20% via-violet-500 via-25%  to-emerald-500 to-90% bg-clip-text text-transparent;
+    }
+}
+
+
