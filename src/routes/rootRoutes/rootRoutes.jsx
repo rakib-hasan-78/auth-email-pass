@@ -1,8 +1,8 @@
 
 import Root from './../../Pages/Root/Root';
 import Home from './../../Pages/Home/Home';
-import About from './../../Pages/About/About';
-import Products from './../../Pages/Products/Products';
+import About from '../../Pages/Signup/Signup';
+import Products from '../../Pages/Login/Login';
 
 const rootRoutes = {
     path: '/',
@@ -15,12 +15,12 @@ const rootRoutes = {
         },
 
         {
-            path:'/about',
+            path:'/signup',
             Component: About
         },
 
         {
-            path:'/products',
+            path:'/login',
             Component: Products,
         }
     ]

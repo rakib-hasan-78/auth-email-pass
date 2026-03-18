@@ -4,9 +4,9 @@ function App() {
   return (
     <>
       <h1 
-      className='primary-title'
+      className='primary-title px-8'
       >
-      Project initialization content & Dependencies intrigations
+      Project initialization Dependencies, intrigations & content 
       </h1>
     </>
   )

@@ -12,7 +12,7 @@
 
 
     /** --- Correct way to define breakpoints --- */
-    
+
     --breakpoint-xxs: 20rem;
     --breakpoint-xs: 21.875rem;
     --breakpoint-sm: 30rem;
@@ -25,6 +25,8 @@
 
 }
 
+/** basic default setup ==> */
+
 @layer base {
     * {
         @apply m-0 p-0 box-border;
@@ -36,11 +38,15 @@
         @apply w-full min-h-full capitalize font-sans font-light;
     }
 }
+
+/** styles for components ==>  */
+
 @layer components {
 
     /** titles ===>  */
+
     .primary-title {
-            @apply text-9xl font-black text-center p-4 px-10 my-5 bg-radial-[at_25%_25%]  from-indigo-500 from-20% via-violet-500 via-25%  to-emerald-500 to-90% bg-clip-text text-transparent;
+            @apply text-7xl font-black text-center p-4 px-10 my-5 bg-radial-[at_25%_25%]  from-indigo-500 from-20% via-violet-500 via-25%  to-emerald-500 to-90% bg-clip-text text-transparent;
     }
 }
 

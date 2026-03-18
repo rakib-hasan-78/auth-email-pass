@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Products = () => {
+const Login = () => {
     return (
         <div>
             <h1 className='primary-title'
             >
-                i am products page......
+                i am Log In page......
             </h1>
         </div>
     );
 };
 
-export default Products;
+export default Login;
