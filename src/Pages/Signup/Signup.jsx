@@ -17,7 +17,8 @@ const Signup = () => {
 
     const formHandler = e =>{
         e.preventDefault();
-        setError('')
+        setError('');
+        
         createUserWithEmailAndPassword(auth,
              signUp.email,
               signUp.password,
