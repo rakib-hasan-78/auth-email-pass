@@ -1,10 +1,11 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../../firsebase/firebase.init';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
-    const [signUp, setSignUp] = useState({name: '', email:'', password:''});
+    const [signUp, setSignUp] = useState({displayName: '', email:'', password:''});
+    const [error ,  setError] = useState('');
 
     const dataPicker = (prop, value)=>{
         
@@ -16,17 +17,38 @@ const Signup = () => {
 
     const formHandler = e =>{
         e.preventDefault();
+        setError('')
         createUserWithEmailAndPassword(auth,
              signUp.email,
-              signUp.password)
-              .then(userCredential=>{
+              signUp.password,
+            )
+              .then(async(userCredential)=>{
+                const user = userCredential.user;
+
+                await updateProfile(user, {
+                    displayName: signUp.displayName
+                })
+                const toastName = signUp.displayName.split(' ')[0];
+                toast.success(`${toastName} signed up successfully!!!`)
                 console.log(userCredential);
+                console.log('profile data::===',  updateProfile);
+                setSignUp(
+                    {displayName: '', email:'', password:''}
+                )
+
               })
               .catch(error=>{
-                console.log(error.message);
+                console.log('error message',error.message);
+                console.log('finding error code', error.code);
+                console.log('finding error name', error.name);
+                if (error.code) {
+                    const errorMsg = error.code.replace('auth/','');
+                    setError(errorMsg);
+                    toast.error(`${errorMsg}`)
+                }
               })
+
               
-        setSignUp({name: '', email:'', password:''})
     }
 
     return (
@@ -41,8 +63,8 @@ const Signup = () => {
                             <div className="card-body">
                                 <fieldset className="fieldset">
                                     <label className="label">Full Name</label>
-                                    <input type="text" className="input" placeholder="Name" name='name'
-                                    value={signUp.name} onChange={(e)=>dataPicker(e.target.name , e.target.value)}/>
+                                    <input type="text" className="input" placeholder="Name" name='displayName'
+                                    value={signUp.displayName} onChange={(e)=>dataPicker(e.target.name , e.target.value)}/>
 
                                     <label className="label">Email</label>
                                     <input type="email" className="input" placeholder="Email" name='email'
@@ -55,6 +77,9 @@ const Signup = () => {
                                     <div><a className="link link-hover">Forgot password?</a></div>
                                     <button className="btn btn-neutral mt-4">Sign Up</button>
                                 </fieldset>
+                                {
+                                    error && ( <p>{error}</p> )
+                                }
                             </div>
                         </div>
                 </form>
