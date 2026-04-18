@@ -2,7 +2,8 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../../firsebase/firebase.init';
 import { toast } from 'react-toastify';
-import { emailValidator } from '../../validators/validators';
+import { emailValidator, nameValidator } from '../../validators/validators';
+import validatorFunc from '../../validators/validatorFunc';
 
 const Signup = () => {
     const [signUp, setSignUp] = useState({displayName: '', email:'', password:''});
@@ -20,10 +21,10 @@ const Signup = () => {
         e.preventDefault();
         setError('');
         
-        // front-end validators ===> 
-        const errMsg = emailValidator(signUp.email)
-        if(errMsg){
-            toast.error(`${errMsg}`);
+        // front-end user validator
+        const errorHandler = validatorFunc(signUp.displayName, signUp.email)
+        if(errorHandler) {
+            toast.error(`${errorHandler}`);
             return;
         } 
         else {

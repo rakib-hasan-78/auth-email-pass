@@ -1,16 +1,30 @@
 
+const nameValidator = (name) => {
+    
+    const userName = name.trim();
+    // if the name field is empty =====>
+    if(!userName) return `User Name Can Not Be Empty or Spaces`;
+    // length of name ==>
+    if(userName.length<3) return `Name Must Contain Minimum 3 Letters.`;
+    // number or symbols in the name ===>
+    if (!/^[a-zA-Z]+$/.test(userName))
+        return "Only Letters Are Valid For Name";
 
+    return null;
+}
+
+// email validator
 const emailValidator = (email)=>{
     // setting all to small letters =>
     const emailToLowercase = email.toLowerCase();
+    // if the email is empty or just spaces only 
+    if(!email.trim()) return `Email cannot be empty or just spaces.`;
     // if email misses @ X
     if(!email.includes('@')) return `@ Is Missing Before Domain Name.`
     // selected domains ==>
     const allDomains = ['yahoo','hotmail','outlook','gmail','icloud'];
     const [userName, domains] = email.split('@');
     
-    // if the email is empty or just spaces only 
-    if(!email.trim()) return `Email cannot be empty or just spaces.`;
     // if email text finds uppercase 
     if(email!==emailToLowercase) return `Email should not contain uppercase letters.`;
     // if the email format is incorrect = = => X
@@ -41,4 +55,4 @@ const emailValidator = (email)=>{
     
 }
 
-export {emailValidator}
+export { nameValidator,emailValidator}
