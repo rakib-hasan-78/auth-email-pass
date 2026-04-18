@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../../firsebase/firebase.init';
 import { toast } from 'react-toastify';
+import { emailValidator } from '../../validators/validators';
 
 const Signup = () => {
     const [signUp, setSignUp] = useState({displayName: '', email:'', password:''});
@@ -19,35 +20,44 @@ const Signup = () => {
         e.preventDefault();
         setError('');
         
-        createUserWithEmailAndPassword(auth,
-             signUp.email,
-              signUp.password,
-            )
-              .then(async(userCredential)=>{
-                const user = userCredential.user;
-
-                await updateProfile(user, {
-                    displayName: signUp.displayName
-                })
-                const toastName = signUp.displayName.split(' ')[0];
-                toast.success(`${toastName} signed up successfully!!!`)
-                console.log(userCredential);
-                console.log('profile data::===',  updateProfile);
-                setSignUp(
-                    {displayName: '', email:'', password:''}
+        // front-end validators ===> 
+        const errMsg = emailValidator(signUp.email)
+        if(errMsg){
+            toast.error(`${errMsg}`);
+            return;
+        } 
+        else {
+            createUserWithEmailAndPassword(auth,
+                 signUp.email,
+                  signUp.password,
                 )
+                  .then(async(userCredential)=>{
+                    const user = userCredential.user;
+    
+                    await updateProfile(user, {
+                        displayName: signUp.displayName
+                    })
+                    const toastName = signUp.displayName.split(' ')[0];
+                    toast.success(`${toastName} signed up successfully!!!`)
+                    console.log(userCredential);
+                    console.log('profile data::===',  updateProfile);
+                    setSignUp(
+                        {displayName: '', email:'', password:''}
+                    )
+    
+                  })
+                  .catch(error=>{
+                    console.log('error message',error.message);
+                    console.log('finding error code', error.code);
+                    console.log('finding error name', error.name);
+                    if (error.code) {
+                        const errorMsg = error.code.replace('auth/','');
+                        setError(errorMsg);
+                        toast.error(`${errorMsg}`)
+                    }
+                  })
 
-              })
-              .catch(error=>{
-                console.log('error message',error.message);
-                console.log('finding error code', error.code);
-                console.log('finding error name', error.name);
-                if (error.code) {
-                    const errorMsg = error.code.replace('auth/','');
-                    setError(errorMsg);
-                    toast.error(`${errorMsg}`)
-                }
-              })
+        }
 
               
     }
@@ -68,7 +78,7 @@ const Signup = () => {
                                     value={signUp.displayName} onChange={(e)=>dataPicker(e.target.name , e.target.value)}/>
 
                                     <label className="label">Email</label>
-                                    <input type="email" className="input" placeholder="Email" name='email'
+                                    <input type="#" className="input" placeholder="Email" name='email'
                                     value={signUp.email} onChange={(e)=>dataPicker(e.target.name,e.target.value)}   
                                     />
                                     <label className="label">Password</label>
