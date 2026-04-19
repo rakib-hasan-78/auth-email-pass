@@ -1,4 +1,5 @@
 
+
 const nameValidator = (name) => {
     
     const userName = name.trim();
@@ -7,7 +8,7 @@ const nameValidator = (name) => {
     // length of name ==>
     if(userName.length<3) return `Name Must Contain Minimum 3 Letters.`;
     // number or symbols in the name ===>
-    if (!/^[a-zA-Z]+$/.test(userName))
+    if (!/^[a-zA-Z ]+$/.test(userName))
         return "Only Letters Are Valid For Name";
 
     return null;
@@ -54,5 +55,23 @@ const emailValidator = (email)=>{
     return null;
     
 }
+// password validator 
+const passwordValidator = (password) => {
+    const pwrd = password.trim();
+    // empty password....
+    if (!pwrd) return `Password Can't Be Empty`;
+    // password length .... 
+    if(pwrd.length<6) return `Password Needs At Least 6 Characters`;
+    // capital letter in password ..... 
+    if(!/[A-Z]/.test(pwrd)) return `Password Must Contain minimum A Capital Letter`;
+    // checking small letter .....
+    if(!/[a-z]/.test(pwrd)) return `Password Must Contain Minimum One Small Letter`;
+    // checking Numbers ... 
+    if (!/[0-9]/.test(pwrd)) return `At Least One Number Needed`;
+    // symbol check 
+    if(!/[!@#$%^&*]/.test(pwrd)) return `At Least One Symbol (!@#$%^&*) Needed`;
+    
+    return null;
+}
 
-export { nameValidator,emailValidator}
+export { nameValidator,emailValidator, passwordValidator};

@@ -1,9 +1,10 @@
-import { emailValidator, nameValidator } from "./validators";
+import { emailValidator, nameValidator, passwordValidator } from "./validators";
 
-const validatorFunc = (name, email) => {
+const validatorFunc = (name, email, password) => {
     // nameValidator 
     if(nameValidator(name)) return `${nameValidator(name)}`;
-    if(emailValidator(email)) return `${emailValidator(email)}`
+    if(emailValidator(email)) return `${emailValidator(email)}`;
+    if(passwordValidator(password)) return `${passwordValidator(password)}`
     
 }
 
