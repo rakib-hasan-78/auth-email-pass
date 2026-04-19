@@ -8,7 +8,7 @@ const nameValidator = (name) => {
     // length of name ==>
     if(userName.length<3) return `Name Must Contain Minimum 3 Letters.`;
     // number or symbols in the name ===>
-    if (!/^[a-zA-Z ]+$/.test(userName))
+    if (!/^[a-zA-Z]+( [a-zA-Z])*$/.test(userName))
         return "Only Letters Are Valid For Name";
 
     return null;

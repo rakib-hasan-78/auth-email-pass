@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { auth } from '../../firsebase/firebase.init';
 import { toast } from 'react-toastify';
 import validatorFunc from '../../validators/validatorFunc';
+import useToggle from '../../assets/toggle';
 
 const Signup = () => {
     const [signUp, setSignUp] = useState({displayName: '', email:'', password:''});
     const [error ,  setError] = useState('');
+    const [showPass, passHandler] = useToggle();
 
     const dataPicker = (prop, value)=>{
         
@@ -82,9 +84,19 @@ const Signup = () => {
                                     value={signUp.email} onChange={(e)=>dataPicker(e.target.name,e.target.value)}   
                                     />
                                     <label className="label">Password</label>
-                                    <input type="password" className="input" placeholder="Password" name='password'
+                                    <div className='relative'>
+
+                                    <input type={showPass ? "text":"password"} className="input" placeholder="Password" name='password'
                                     value={signUp.password} onChange={(e)=> dataPicker(e.target.name, e.target.value)}    
                                     />
+                                    <button
+                                    onClick={passHandler}
+                                    className='btn btn-xs absolute top-1/2 -translate-y-1/2 -translate-x-4 right-0 rounded-full w-6 h-6 font-extralight text-white' 
+                                    type="button">{showPass ? 
+                                    <i className="bi bi-eye "></i> :
+                                    <i className="bi bi-eye-slash"></i>}
+                                    </button>
+                                    </div>
                                     <div><a className="link link-hover">Forgot password?</a></div>
                                     <button className="btn btn-neutral mt-4">Sign Up</button>
                                 </fieldset>
