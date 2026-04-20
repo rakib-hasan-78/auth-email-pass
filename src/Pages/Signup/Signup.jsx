@@ -4,24 +4,22 @@ import { auth } from '../../firsebase/firebase.init';
 import { toast } from 'react-toastify';
 import validatorFunc from '../../validators/validatorFunc';
 import useToggle from '../../assets/toggle';
+import useFormHandler from '../../assets/dataPicker';
 
 const Signup = () => {
-    const [signUp, setSignUp] = useState({displayName: '', email:'', password:''});
+    
     const [error ,  setError] = useState('');
     const [showPass, passHandler] = useToggle();
-
-    const dataPicker = (prop, value)=>{
-        
-        setSignUp(signUp=>({
-            ...signUp,
-            [prop] : value,
-        }))
-    }
+    const [signUp, signupHandler, reset]=useFormHandler({
+        displayName:'',
+        email:'',
+        password:''
+    })
 
     const formHandler = e =>{
         e.preventDefault();
         setError('');
-        
+       
         // front-end user validator
         const errorHandler = validatorFunc(signUp.displayName, signUp.email, signUp.password)
         if(errorHandler) {
@@ -43,7 +41,7 @@ const Signup = () => {
                     toast.success(`${toastName} signed up successfully!!!`)
                     console.log(userCredential);
                     console.log('profile data::===',  updateProfile);
-                    setSignUp(
+                    reset(
                         {displayName: '', email:'', password:''}
                     )
     
@@ -77,17 +75,17 @@ const Signup = () => {
                                 <fieldset className="fieldset">
                                     <label className="label">Full Name</label>
                                     <input type="text" className="input" placeholder="Name" name='displayName'
-                                    value={signUp.displayName} onChange={(e)=>dataPicker(e.target.name , e.target.value)}/>
+                                    value={signUp.displayName} onChange={(e)=>signupHandler(e.target.name , e.target.value)}/>
 
                                     <label className="label">Email</label>
                                     <input type="#" className="input" placeholder="Email" name='email'
-                                    value={signUp.email} onChange={(e)=>dataPicker(e.target.name,e.target.value)}   
+                                    value={signUp.email} onChange={(e)=>signupHandler(e.target.name,e.target.value)}   
                                     />
                                     <label className="label">Password</label>
                                     <div className='relative'>
 
                                     <input type={showPass ? "text":"password"} className="input" placeholder="Password" name='password'
-                                    value={signUp.password} onChange={(e)=> dataPicker(e.target.name, e.target.value)}    
+                                    value={signUp.password} onChange={(e)=>signupHandler(e.target.name, e.target.value)}    
                                     />
                                     <button
                                     onClick={passHandler}
