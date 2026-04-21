@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import validatorFunc from '../../validators/validatorFunc';
 import useToggle from '../../assets/toggle';
 import useFormHandler from '../../assets/dataPicker';
+import { Link } from 'react-router';
 
 const Signup = () => {
     
@@ -13,7 +14,8 @@ const Signup = () => {
     const [signUp, signupHandler, reset]=useFormHandler({
         displayName:'',
         email:'',
-        password:''
+        password:'',
+        terms: false
     })
 
     const formHandler = e =>{
@@ -21,7 +23,7 @@ const Signup = () => {
         setError('');
        
         // front-end user validator
-        const errorHandler = validatorFunc(signUp.displayName, signUp.email, signUp.password)
+        const errorHandler = validatorFunc(signUp.displayName, signUp.email, signUp.password, signUp.terms)
         if(errorHandler) {
             toast.error(`${errorHandler}`);
             return;
@@ -41,9 +43,8 @@ const Signup = () => {
                     toast.success(`${toastName} signed up successfully!!!`)
                     console.log(userCredential);
                     console.log('profile data::===',  updateProfile);
-                    reset(
-                        {displayName: '', email:'', password:''}
-                    )
+                    console.log('signed up with terms = ', signUp.terms);
+                    reset()
     
                   })
                   .catch(error=>{
@@ -96,7 +97,18 @@ const Signup = () => {
                                     </button>
                                     </div>
                                     <div><a className="link link-hover">Forgot password?</a></div>
+                                    <div>
+                                        <label className="label">
+                                        <input type="checkbox"
+                                        onChange={(e)=> signupHandler(e.target.name, e.target.checked)}
+                                         name='terms' className="checkbox" />
+                                        Accept our T&C.
+                                        </label>
+                                    </div>
                                     <button className="btn btn-neutral mt-4">Sign Up</button>
+                                    <p>Already Have An Account?<span className='text-blue-400 mx-2'>  <Link to={`/login`}>  Log In</Link>
+                                    </span>  
+                                     </p>
                                 </fieldset>
                                 {
                                     error && ( <p>{error}</p> )
@@ -110,3 +122,4 @@ const Signup = () => {
 };
 
 export default Signup;
+

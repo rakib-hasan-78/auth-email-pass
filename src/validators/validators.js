@@ -73,5 +73,9 @@ const passwordValidator = (password) => {
     
     return null;
 }
+const checkBoxValidator =(terms)=>{
+    if(!terms) return `You Must Accept Our T&C.`;
+    return null;
+}
 
-export { nameValidator,emailValidator, passwordValidator};
+export { nameValidator,emailValidator, passwordValidator, checkBoxValidator};
