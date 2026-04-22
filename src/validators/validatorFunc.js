@@ -2,10 +2,26 @@ import { checkBoxValidator, emailValidator, nameValidator, passwordValidator } f
 
 const validatorFunc = (name, email, password, terms) => {
     // nameValidator 
-    if(nameValidator(name)) return `${nameValidator(name)}`;
-    if(emailValidator(email)) return `${emailValidator(email)}`;
-    if(passwordValidator(password)) return `${passwordValidator(password)}`
-    if(checkBoxValidator(terms)) return `${checkBoxValidator(terms)}`;
+    if (name!== undefined) {
+        const error = nameValidator(name);
+        if(error) return error;
+    }
+    // email validator 
+    if(email!==undefined){
+        const error = emailValidator(email);
+        if(error) return error;
+    }
+    // password validator 
+    if(password!==undefined){
+        const error = passwordValidator(password);
+        if(error) return error;
+    }
+    // terms validator 
+    if(terms!==undefined){
+        const error = checkBoxValidator(terms);
+        if(error) return error;
+    }
+    return null;
 }
 
 export default validatorFunc;

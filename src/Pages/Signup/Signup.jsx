@@ -44,6 +44,7 @@ const Signup = () => {
                     console.log(userCredential);
                     console.log('profile data::===',  updateProfile);
                     console.log('signed up with terms = ', signUp.terms);
+                    console.log(signUp.email, signUp.password, signUp.displayName);
                     reset()
     
                   })
