@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../../firsebase/firebase.init';
 import { toast } from 'react-toastify';
@@ -40,12 +40,16 @@ const Signup = () => {
                         displayName: signUp.displayName
                     })
                     const toastName = signUp.displayName.split(' ')[0];
-                    toast.success(`${toastName} signed up successfully!!!`)
-                    console.log(userCredential);
-                    console.log('profile data::===',  updateProfile);
-                    console.log('signed up with terms = ', signUp.terms);
-                    console.log(signUp.email, signUp.password, signUp.displayName);
-                    reset()
+                    toast.success(`${toastName} signed up successfully!!!`);
+                    console.log(user);
+                    reset();
+
+                    // email verification
+                    sendEmailVerification(userCredential.user)
+                    .then(() => {
+                        // Email verification sent!
+                        toast.info(`Email verification sent to ${signUp.email}`)
+                    });
     
                   })
                   .catch(error=>{
@@ -122,4 +126,6 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
 
