@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router';
 import useFormHandler from '../../assets/dataPicker';
-import loginHandler from '../../assets/actionHandlers';
+import {forgotPasswordHandler, loginHandler} from '../../assets/actionHandlers';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
+    const emailRef = useRef();
     const [login,setLogin, reset] = useFormHandler({
         email:'',
         password:''
@@ -22,7 +23,7 @@ const Login = () => {
                 <p className='text-center'>please log in your account</p>
 
                 <label className="label">Email</label>
-                <input value={login.email} name='email' onChange={(e)=>setLogin(e.target.name, e.target.value)} type="email" className="input" placeholder="Email" />
+                <input ref={emailRef} value={login.email} name='email' onChange={(e)=>setLogin(e.target.name, e.target.value)} type="email" className="input" placeholder="Email" />
 
                 <label className="label">Password</label>
                 <input value={login.password} type="password" name='password' onChange={(e)=>setLogin(e.target.name, e.target.value)} className="input" placeholder="Password" />
@@ -39,7 +40,7 @@ const Login = () => {
                  :`Log In`}
 
                 </button>
-                    <div>
+                    <div onClick={()=>forgotPasswordHandler(emailRef)}>
                         <a className="link link-hover">Forgot password?</a>
                     </div>
                     <div>

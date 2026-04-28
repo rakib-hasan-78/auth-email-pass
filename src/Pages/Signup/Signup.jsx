@@ -39,17 +39,17 @@ const Signup = () => {
                     await updateProfile(user, {
                         displayName: signUp.displayName
                     })
-                    const toastName = signUp.displayName.split(' ')[0];
-                    toast.success(`${toastName} signed up successfully!!!`);
-                    console.log(user);
-                    reset();
-
                     // email verification
-                    sendEmailVerification(userCredential.user)
+                    sendEmailVerification(user)
                     .then(() => {
                         // Email verification sent!
                         toast.info(`Email verification sent to ${signUp.email}`)
                     });
+                    const toastName = signUp.displayName.split(' ')[0];
+                    toast.success(`${toastName} signed up successfully!!!`);
+                    console.log(user.emailVerified);
+                    reset();
+
     
                   })
                   .catch(error=>{
