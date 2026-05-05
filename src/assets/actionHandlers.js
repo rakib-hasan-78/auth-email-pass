@@ -60,5 +60,3 @@ const forgotPasswordHandler =(emailRef)=>{
 } 
 export {loginHandler, forgotPasswordHandler};
 
-
-

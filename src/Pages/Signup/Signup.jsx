@@ -1,11 +1,13 @@
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { auth } from '../../firsebase/firebase.init';
 import { toast } from 'react-toastify';
 import validatorFunc from '../../validators/validatorFunc';
 import useToggle from '../../assets/toggle';
 import useFormHandler from '../../assets/dataPicker';
 import { Link } from 'react-router';
+import { imageUploadHandler } from '../../firsebase/imageUploadHandler';
+
 
 const Signup = () => {
     
@@ -15,8 +17,11 @@ const Signup = () => {
         displayName:'',
         email:'',
         password:'',
+        file:null,
         terms: false
-    })
+    });
+    const imageRef = useRef(null);
+    console.log(signUp);
 
     const formHandler = e =>{
         e.preventDefault();
@@ -35,9 +40,12 @@ const Signup = () => {
                 )
                   .then(async(userCredential)=>{
                     const user = userCredential.user;
-    
+                    const uploadImage = signUp.file
+                     ? await imageUploadHandler(signUp.file)
+                     : null;
                     await updateProfile(user, {
-                        displayName: signUp.displayName
+                        displayName: signUp.displayName,
+                         photoURL: uploadImage
                     })
                     // email verification
                     sendEmailVerification(user)
@@ -48,6 +56,7 @@ const Signup = () => {
                     const toastName = signUp.displayName.split(' ')[0];
                     toast.success(`${toastName} signed up successfully!!!`);
                     console.log(user.emailVerified);
+                    imageRef.current.value = '';
                     reset();
 
     
@@ -86,6 +95,13 @@ const Signup = () => {
                                     <label className="label">Email</label>
                                     <input type="#" className="input" placeholder="Email" name='email'
                                     value={signUp.email} onChange={(e)=>signupHandler(e.target.name,e.target.value)}   
+                                    />
+                                    <label className="label">upload image</label>
+                                    <input
+                                     type="file" className="input" placeholder="your picture" 
+                                     name='file'
+                                     ref={imageRef}
+                                    onChange={(e)=>signupHandler(e.target.name,e.target.files[0])}   
                                     />
                                     <label className="label">Password</label>
                                     <div className='relative'>
@@ -126,6 +142,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-
-

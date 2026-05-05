@@ -8,6 +8,7 @@ const useFormHandler =(initialState)=>{
             [prop]: value,
         }))
     }
+    
 
     // reset data 
 
